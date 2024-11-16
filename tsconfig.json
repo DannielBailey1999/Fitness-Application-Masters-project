@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "src/screens/Home/Activity", "src/screens/Home/Running/index.js", "constants/colors.js", "app/( tabs )/index.js", "app/_layout.js", "app/( tabs )/_layout.js", "app/( tabs )/activityIndex.js", "src/screens/Home/Run"  ]
+, "src/screens/Home/Activity", "src/screens/Home/Running/index.js", "constants/colors.js", "app/( tabs )/index.js", "app/_layout.js", "app/( tabs )/_layout.js", "app/( tabs )/activityIndex.js", "src/screens/Home/Run", "app/summary.js"  ]
 }

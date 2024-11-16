@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native';
 import ActivityScreen from '@/src/screens/Home/Activity';
 
-
 export default function settings() {
   return (
-    <View >
+    <View>
       <ActivityScreen />
+      
     </View>
   );
 }
