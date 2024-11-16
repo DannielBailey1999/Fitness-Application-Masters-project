@@ -3,30 +3,71 @@ import { View, Text, Pressable, StyleSheet, TextInput } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import Styles from './styles';
 import colors from "@/constants/colors";
+import MapView,{ Circle } from 'react-native-maps';
 
 
 const RunScreen = () => {
-    const [metricValue, setMetricValue] = useState('0.1');
-
-    const validateInput = (input) => {
-        var rgx = /^[0-9]{1,}\.?[0-9]?$/;
+    //States
+    const [metricValue, setMetricValue] = useState('1.0');
+    const [toggle, setToggle] = useState('Distance');
+    const [metricUnit, setMetricUnit] = useState('Miles');
+    //Function to validate metric values
+    const validateInput = (input, typeOfMetric) => {
+        var rgx;
+        // The distance should have any number of digits from 0 to 9. one or zero decimal point. one or zero number (digit) after the decimal ppoint    
+        if (typeOfMetric == 'Distance')
+        rgx = /^[0-9]{1,2}\.?[0-9]{1,2}$/;
+        else rgx = /^[0-9]{0,2}\:{1}[0-9]{0,2}$/;
         return input.match(rgx)
     }
+    //Helper function to make changes to the text inpput
     const changeMetricValueHander = (input) => {
         //For distance
         //Round off the number to 1 decimal place eg: 2.5
-        if (!validateInput(input)) {
+        if (!validateInput(input, toggle)) {
+            if (input[0] == '.' || input[0] == ':') {
+                input = '0' + input;
+            }
+            if (input[input.length - 1] == '.' || input[input.length - 1] == ':'){
+                input += '0';
+            }
             setMetricValue(input)
         }
-        //For Time
         
     };
-
-
-    
+    const toggleHandler = () => {
+        if(toggle == 'Distance') {
+            setToggle('Time')
+            setMetricUnit('Hours : Minutes')
+            setMetricValue('01:00')
+        } else {
+            setToggle('Distance')
+            setMetricUnit('Miles')
+            setMetricValue('1.0')
+        }
+    };
     return (
-        <View style={Styles.mainContainer}>
+        <View style={Styles.container}>
             {/*Google Maps API/Image*/}
+            <View style={Styles.container} pointerEvents="none">
+            <MapView 
+            initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDela: 0.0421,
+            }}
+            style={Styles.mapView}
+                minZoomLevel={18}
+                ><Circle
+                center={{latitude: 37.78825, longitude: -122.4324}}
+                radius={4}
+                fillColor="red"
+                /></MapView>
+            </View>
+            
+        <View style={{position: 'absolute', bottom: 0, right: 0, ...Styles.mainContainer}}>
+            
             {/*Metric - Button to change the metric value */}
           
             <Pressable onPress={() => console.warn('Open modal and change value')}>
@@ -37,8 +78,8 @@ const RunScreen = () => {
                 value={metricValue} 
                 onChangeText={changeMetricValueHander}
                 />
-                <View style={Styles.metricUnderline}></View>
-                <Text style={Styles.metric}>Miles</Text>
+                
+                <Text style={Styles.metric}>{metricUnit}</Text>
             </Pressable>
 
             <View style={Styles.bottomContainer}>
@@ -55,13 +96,14 @@ const RunScreen = () => {
 
                 {/*Toggle button to change the metric value*/}
                 <Pressable 
-                    onPress={() => console.warn('Toggling')} 
+                    onPress={toggleHandler}
                     style={Styles.toggleContainer}
                 >
-                    <Text style={Styles.distance}>Distance</Text>
+                    <Text style={Styles.distance}>{toggle}</Text>
                 </Pressable>
             </View>
         </View>
+      </View>
     );
 };
 

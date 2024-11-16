@@ -10,7 +10,7 @@ const Styles = StyleSheet.create({
         paddingVertical: 48
      },
      metricValue: {
-         fontSize: 42,
+         fontSize: 52,
          fontWeight: 'bold',
          borderBottomWidth: 2,
          marginBottom: 4,
@@ -41,7 +41,16 @@ const Styles = StyleSheet.create({
      distance: {
         fontSize: 14
     },
-    
+    container: {
+        height: '100%', 
+        width: '100%'
+    },
+    mapView: {
+        width: '100%',
+        height: '100%',
+        opacity: 0.7
+        },
+
 });
 
 export default Styles;
