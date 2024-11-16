@@ -1,12 +1,11 @@
 import React from "react";
-import {View, Text, Image} from 'react-native';
+import { View, Text } from "react-native";
 
-
-const ActivityScreen = () => {
+const ActivityCard = () => {
     return (
         <View style={{paddingHorizontal: 12}}>
             {/*card 1 */}
-            <View style={{borderRadius: 12,
+        <View style={{borderRadius: 12,
                  backgroundColor: '#ffffff',
                  marginVertical: 8,
                  padding: 16,
@@ -54,11 +53,9 @@ const ActivityScreen = () => {
                 <Text style={{color: '#8d8d8d'}}>Time</Text>
             </View>
             </View>
-            </View>
+        </View>
             {/* Card 2 */}
             {/* Card 3*/}
-        </View>
+    </View>
     );
 };
-
-export default ActivityScreen;
