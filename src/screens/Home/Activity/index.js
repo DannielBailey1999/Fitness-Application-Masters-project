@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Text, Image, FlatList} from 'react-native';
 import ActivityCard from '@/src/components/ActivityCard';
-import DATA from '@/constants/dummyData';
+import { DATA } from '@/constants/dummyData';
 
 
 const ActivityScreen = () => {
@@ -11,7 +11,11 @@ const ActivityScreen = () => {
         miles = {item.miles}
         avgPace = {item.avgPace}
         time = {item.time}
+        calories = {item.calories}
+        totalMiles = {item.totalMiles}
     />;
+
+    
     return (
         <View style={{paddingHorizontal: 12}}>
         <FlatList

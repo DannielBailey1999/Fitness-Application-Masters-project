@@ -1,11 +1,12 @@
 // app/summary.js
-import React, { useState, useRef  }  from 'react';
+import React, { useState, useRef, useEffect }  from 'react';
 import { View, Text, StyleSheet, Share, Pressable, TextInput, Keyboard, KeyboardAvoidingView, Platform, Image } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, useLocalSearchParams  } from 'expo-router';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ProgressBar from '@/src/screens/summary/progressBar';
 import Styles from '@/src/screens/summary/styles';
+import { Levels } from '@/constants/dummyData';
 const SummaryScreen = () => {
     // Share function
     const onShare = async () => {
@@ -21,9 +22,44 @@ const SummaryScreen = () => {
         }
     };
 
-    const [title, setTitle] = useState('Tuesday Morning Run');
+    const params = useLocalSearchParams();
+    const [title, setTitle] = useState(`${params.day} ${params.timeOfDay} Run`);
+    const [progressColor, setProgressColor] = useState('green');
+    const [progress, setProgress] = useState('20%')
+    const totalMiles = Number(params.totalMiles);
+    const [milesLeft, setMilesLeft] = useState(0);
+
+    //function to calculate the level of the user
+    const calculateLevelHandler = (totalMiles) => {
+        let index;
+        totalMiles = Number(totalMiles);
+        
+        for (let i = Levels.length - 1; i >= 0; i--) {
+            if (totalMiles >= Levels[i].milesRequired) {
+                index = i;
+                setProgressColor(Levels[i].level);
+                if (i < Levels.length - 1) {
+                    const progressToNext = ((totalMiles - Levels[i].milesRequired) / 
+                        (Levels[i + 1].milesRequired - Levels[i].milesRequired)) * 100;
+                    setProgress(`${Math.min(progressToNext, 100)}%`);
+                    setMilesLeft(totalMiles - Levels[i].milesRequired);
+                } else {
+                    setProgress('100%');
+                }
+                break;
+            }
+        }
+        return index;
+    };
+
+    useEffect(() => {
+        calculateLevelHandler(totalMiles);
+    }, [totalMiles]);
+    
+
     const titleChangeHandler = input => {
         setTitle(input);
+        
     };
     // Reference to textInput component 
     const textInputRef = useRef();
@@ -50,7 +86,7 @@ const SummaryScreen = () => {
             <Pressable style={Styles.mainContainer}
             onPress={() => Keyboard.dismiss()}>
                 {/*Day-Time */}
-                <Text styles={Styles.subHeading}> Tuesday - 07: 28</Text>
+                <Text styles={Styles.subHeading}>{params.day} - {params.timeOfDay}</Text>
                 {/*Text Input heading with pencil icon */}
                 <Pressable style={Styles.textInputContainer}
                     onPress={() => textInputRef.current.focus()}
@@ -65,42 +101,38 @@ const SummaryScreen = () => {
                 <KeyboardAvoidingView behavior={Platform.OS == 'ios'?'padding' : 'height'} style={{marginTop: 12, flex: 1}}>
                  {/*Miles */}
                 <View>
-                    <Text style={{fontSize: 80, fontWeight: 'bold'}}>2.00</Text>
-                    <Text style={{fontSize: 20, color: '#aaaaaa'}}>Miles</Text>
+                    <Text style={Styles.milesValue}>{params.miles}</Text>
+                    <Text style={Styles.milesMetric}>Miles</Text>
                 </View>
                 {/*Metric Pace, time and calories */}
-                <View style={{
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                }} >
+                <View style={Styles.metricContainer} >
                     <View>
-                        <Text style={{fontSize: 24, fontWeight: 'bold'}}>10'59"</Text>
-                        <Text style={{color: '#999999', fontSize: 16}}>Pace</Text>
+                        <Text style={Styles.metricValue}>{params.avgPace.replace(/\\/g, '')}</Text>
+                        <Text style={Styles.metric}>Pace</Text>
                     </View>
                     <View>
-                        <Text style={{fontSize: 24, fontWeight: 'bold'}}>24:30</Text>
-                        <Text style={{color: '#999999', fontSize: 16}}>Time</Text>
+                        <Text style={Styles.metricValue}>{params.time}</Text>
+                        <Text style={Styles.metric}>Time</Text>
                     </View>
                     <View>
-                        <Text style={{fontSize: 24, fontWeight: 'bold'}}>116</Text>
-                        <Text style={{color: '#999999', fontSize: 16}}>Calories</Text>
+                        <Text style={Styles.metricValue}>{params.calories}</Text>
+                        <Text style={Styles.metric}>Calories</Text>
                     </View>
                 </View>
                 {/*Progress Bar */}
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={Styles.logoContainer}>
                     <Image source={require('@/assets/images/LionHead.png')}
-                    style={{height: 400, width: 360}}
+                    style={Styles.logo}
                     />
-                <Text>Progress Bar</Text>
                 <ProgressBar 
-                prog="60%" 
-                innerBorderColor="#4A90E2" 
+                prog={progress}
+                innerBorderColor={progressColor}
                 containerborderColor="#fff" 
                 containerBgr="#ccc" 
                 />
+                <Text > {milesLeft} miles to orange level</Text>
                 </View>
+                
                 </KeyboardAvoidingView>
                 
             </Pressable>

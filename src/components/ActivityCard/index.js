@@ -1,14 +1,26 @@
 import React from "react";
 import { View, Text, Image, Pressable} from "react-native";
-import { Link } from "expo-router";
+import { Link, } from "expo-router";
 import Styles from "./styles";
 import colors from "@/constants/colors";
 //Activiy card for activity screen
 
 const ActivityCard = (props) => {
-    
+    console.log(props)
     return (
-        <Link href="/summary" asChild>
+        <Link href={{
+            pathname: "/summary",
+            params: {
+              day: props.day,
+              timeOfDay: props.timeOfDay,
+              miles: props.miles,
+              avgPace: props.avgPace,
+              time: props.time,
+              calories: props.calories,
+              totalMiles: props.totalMiles,
+            }
+          }} 
+          asChild>
         <Pressable style={Styles.mainContainer} onPress={() => console.log('Details of this page')}>
            
            {/* Inner container 1 */}
