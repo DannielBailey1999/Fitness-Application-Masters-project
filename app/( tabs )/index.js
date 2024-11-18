@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import RunScreen from '@/src/screens/Home/Running';
+import RunScreen from '@/app/screens/Home/Runnning/index';
 
 
 export default function Tab() {

@@ -6,10 +6,9 @@ import colors from "@/constants/colors";
 //Activiy card for activity screen
 
 const ActivityCard = (props) => {
-    console.log(props)
     return (
         <Link href={{
-            pathname: "/summary",
+            pathname: "/screens/summary/summary",
             params: {
               day: props.day,
               timeOfDay: props.timeOfDay,

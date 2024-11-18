@@ -4,8 +4,8 @@ import { View, Text, StyleSheet, Share, Pressable, TextInput, Keyboard, Keyboard
 import { Stack, useLocalSearchParams  } from 'expo-router';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import ProgressBar from '@/src/screens/summary/progressBar';
-import Styles from '@/src/screens/summary/styles';
+import ProgressBar from './progressBar';
+import Styles from './styles';
 import { Levels } from '@/constants/dummyData';
 const SummaryScreen = () => {
     // Share function
@@ -107,7 +107,7 @@ const SummaryScreen = () => {
                 {/*Metric Pace, time and calories */}
                 <View style={Styles.metricContainer} >
                     <View>
-                        <Text style={Styles.metricValue}>{params.avgPace.replace(/\\/g, '')}</Text>
+                    <Text style={Styles.metricValue}>{params.avgPace ? params.avgPace.replace(/\\/g, '') : '0:00'}</Text>
                         <Text style={Styles.metric}>Pace</Text>
                     </View>
                     <View>
@@ -130,7 +130,7 @@ const SummaryScreen = () => {
                 containerborderColor="#fff" 
                 containerBgr="#ccc" 
                 />
-                <Text > {milesLeft} miles to orange level</Text>
+                <Text > {milesLeft} miles to {progressColor} level</Text>
                 </View>
                 
                 </KeyboardAvoidingView>

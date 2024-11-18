@@ -4,6 +4,7 @@ import { Avatar } from 'react-native-elements';
 import Styles from './styles';
 import colors from "@/constants/colors";
 import MapView,{ Circle } from 'react-native-maps';
+import { router } from "expo-router";
 
 
 const RunScreen = () => {
@@ -84,15 +85,20 @@ const RunScreen = () => {
 
             <View style={Styles.bottomContainer}>
                 {/*Start Button */}
-                <Avatar
-                    size={120}
-                    rounded
-                    title="START"
-                    onPress={() => console.warn("Works!")}
+               
+                    <Avatar                     
+                    size={120}                     
+                    rounded                     
+                    title="START"                     
                     activeOpacity={0.7}
-                    titleStyle={Styles.avatarTitle}
-                    containerStyle={Styles.avatarContainer}
-                />
+                    onPress={() => router.push({
+                        pathname: '/screens/run/runScreen',
+                        params: {value: metricValue, metric: toggle},
+                    })}                      
+                    titleStyle={Styles.avatarTitle}                     
+                    containerStyle={Styles.avatarContainer}                 
+                    />
+                
 
                 {/*Toggle button to change the metric value*/}
                 <Pressable 
