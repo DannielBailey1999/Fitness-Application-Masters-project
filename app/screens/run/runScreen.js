@@ -1,4 +1,4 @@
-import React, {useEffect, useState}from "react";
+import React, {useCallback, useEffect, useState}from "react";
 import { View, Text, Alert} from "react-native";
 import ProgressBar from '../summary/progressBar';
 import { Link, router, useLocalSearchParams, useNavigation} from "expo-router";
@@ -11,12 +11,18 @@ const RunningScreen = () => {
     const { value, metric} = params;
     console.log(params);
 
+    // states to maintain dynamic values
     const [Metric, setMetric] = useState('Miles');
     const [metricValue, setMetricValue] = useState('0.0');
     const [progress, setProgress] = useState('0%');
     const [Pace, setPace] = useState("-'--\"");
     const [calories, setCalories] = useState("--");
     const [targetValue, setTargetValue] = useState('0');
+    const [timeValue, setTimeValue] = useState('00:00');
+    const [mileValue, setmileValue] = useState('0');
+    //This state keeps check whether the screen is in focus or not
+    const [inFocus, setInFocus] = useState(true)
+
 
     //This use effect will run only once
     useEffect(() => {
@@ -24,19 +30,47 @@ const RunningScreen = () => {
             setMetric('Hours:Minutes')
             setMetricValue('00:00')
         }
-        setTargetValue(props.value)
+        setTargetValue(params.value)
     }, []);
 
-
-
-    useEffect(()=>navigation.addListener('beforeRemove', event=>{
+    const backButtonCallBack = useCallback(event=>{
         event.preventDefault();
-        Alert.alert('Discarding Run', 'Are you sure you want to discard this run?', [
+        Alert.alert('Discarding Run', 
+            'Are you sure you want to discard this run?', 
+            [
             {text: 'No', style:'cancel', onPress:()=>{}},
-            {text: 'Yes', style:'destructive', onPress:()=>navigation.dispatch(event.data.action)}
-        ])
+            {
+                text: 'Yes', 
+                style:'destructive', 
+                onPress:()=>navigation.dispatch(event.data.action),
+            },
+        ],
+    );
+    }, 
+    [navigation],
+    );
+    useEffect(()=>{
+        if (inFocus) navigation.addListener('beforeRemove', backButtonCallBack);
+        return () => navigation.removeListener('beforeRemove', backButtonCallBack);
+    }, 
+    [navigation, inFocus]);
 
-    }), [navigation])
+    useEffect(() => navigation.addListener('focus', event => {
+        setInFocus(true);
+    }),
+    [navigation],
+    );
+
+    useEffect(() => navigation.addListener('blur', event => {
+        setInFocus(false);
+    }),
+    [navigation],
+    );
+
+
+
+
+
 
     return (
         <View style={Styles.mainContainer}>
@@ -87,7 +121,18 @@ const RunningScreen = () => {
                     rounded                     
                     title="| |"                     
                     activeOpacity={0.7}
-                    onPress={() => router.push('/screens/pause')}                    
+                    onPress={() => router.push({
+                        pathname: "/screens/pause",
+                        params: {
+                            timeValue: timeValue,
+                            mileValue: mileValue,
+                            calories: calories, 
+                            pace: Pace,
+                            progress: progress,
+                            targetValue: targetValue,
+                            metric: Metric
+                        },
+                     })}                 
                     titleStyle={Styles.avatarTitle}                     
                     containerStyle={{backgroundColor: '#000'}}                
                     />

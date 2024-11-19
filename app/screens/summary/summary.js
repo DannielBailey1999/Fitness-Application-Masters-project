@@ -1,7 +1,7 @@
 // app/summary.js
 import React, { useState, useRef, useEffect }  from 'react';
 import { View, Text, StyleSheet, Share, Pressable, TextInput, Keyboard, KeyboardAvoidingView, Platform, Image } from 'react-native';
-import { Stack, useLocalSearchParams  } from 'expo-router';
+import { Stack, useLocalSearchParams, router  } from 'expo-router';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ProgressBar from './progressBar';
@@ -69,6 +69,17 @@ const SummaryScreen = () => {
             <Stack.Screen 
                 options={{
                     title: 'Summary',
+                    headerLeft: () => (
+                        <Pressable 
+                            onPress={() => router.replace('/')}
+                            style={({ pressed }) => ({
+                                opacity: pressed ? 0.5 : 1,
+                                marginLeft: 15
+                            })}
+                        >
+                            <Ionicons name="arrow-back" size={24} color="black" />
+                        </Pressable>
+                    ),
                     headerRight: () => (
                         <Pressable 
                             onPress={onShare}
