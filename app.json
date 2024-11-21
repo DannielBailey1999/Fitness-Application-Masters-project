@@ -32,7 +32,14 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Danniel to use your location."
+        }
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

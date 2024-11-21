@@ -50,6 +50,14 @@ const Styles = StyleSheet.create({
         height: '100%',
         opacity: 0.7
         },
+    errorText: {
+        position: 'absolute',
+        top: 20,
+        backgroundColor: 'rgba(255, 0, 0, 0.7)',
+        padding: 10,
+        borderRadius: 5,
+        color: 'white',
+    },
 
 });
 

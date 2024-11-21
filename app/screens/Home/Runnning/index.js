@@ -5,7 +5,7 @@ import Styles from './styles';
 import colors from "@/constants/colors";
 import MapView,{ Circle } from 'react-native-maps';
 import { router } from "expo-router";
-
+import useLocation from '@/constants/locationService';
 
 const RunScreen = () => {
     //States
@@ -47,21 +47,25 @@ const RunScreen = () => {
             setMetricValue('1.0')
         }
     };
+
+    const { latitude, longitude, errorMsg } = useLocation();
+    console.log(latitude, longitude);
+
     return (
         <View style={Styles.container}>
             {/*Google Maps API/Image*/}
             <View style={Styles.container} pointerEvents="none">
             <MapView 
-            initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
+            region={{
+                latitude: latitude || 37.78825,
+                longitude: longitude|| -122.4324,
                 latitudeDelta: 0.0922,
                 longitudeDela: 0.0421,
             }}
             style={Styles.mapView}
                 minZoomLevel={18}
                 ><Circle
-                center={{latitude: 37.78825, longitude: -122.4324}}
+                center={{latitude: latitude || 37.78825, longitude:longitude || -122.4324}}
                 radius={4}
                 fillColor="red"
                 /></MapView>

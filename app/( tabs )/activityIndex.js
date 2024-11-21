@@ -5,7 +5,8 @@ export default function settings() {
   return (
     <View>
       <ActivityScreen />
-      
+      {/* <LocationService /> */}
+  
     </View>
   );
 }

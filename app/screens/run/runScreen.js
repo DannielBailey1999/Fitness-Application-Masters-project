@@ -21,56 +21,50 @@ const RunningScreen = () => {
     const [timeValue, setTimeValue] = useState('00:00');
     const [mileValue, setmileValue] = useState('0');
     //This state keeps check whether the screen is in focus or not
-    const [inFocus, setInFocus] = useState(true)
-
-
-    //This use effect will run only once
-    useEffect(() => {
-        if(params.metric == 'Time'){
-            setMetric('Hours:Minutes')
-            setMetricValue('00:00')
-        }
-        setTargetValue(params.value)
-    }, []);
-
+    const [inFocus, setInFocus] = useState(true);
+    
     const backButtonCallBack = useCallback(event=>{
         event.preventDefault();
         Alert.alert('Discarding Run', 
             'Are you sure you want to discard this run?', 
             [
-            {text: 'No', style:'cancel', onPress:()=>{}},
-            {
-                text: 'Yes', 
-                style:'destructive', 
-                onPress:()=>navigation.dispatch(event.data.action),
-            },
-        ],
-    );
+                {text: 'No', style:'cancel', onPress:()=>{}},
+                {
+                    text: 'Yes', 
+                    style:'destructive', 
+                    onPress:()=>navigation.dispatch(event.data.action),
+                },
+            ],
+        );
     }, 
     [navigation],
     );
+    
     useEffect(()=>{
         if (inFocus) navigation.addListener('beforeRemove', backButtonCallBack);
         return () => navigation.removeListener('beforeRemove', backButtonCallBack);
     }, 
     [navigation, inFocus]);
-
+    
     useEffect(() => navigation.addListener('focus', event => {
         setInFocus(true);
     }),
     [navigation],
     );
-
+    
     useEffect(() => navigation.addListener('blur', event => {
         setInFocus(false);
     }),
     [navigation],
     );
 
-
-
-
-
+    useEffect(() => {
+        if(params.metric == 'Time'){
+            setMetric('Hours:Minutes');
+            setMetricValue('00:00');
+        }
+        setTargetValue(params.value);
+    }, []);
 
     return (
         <View style={Styles.mainContainer}>

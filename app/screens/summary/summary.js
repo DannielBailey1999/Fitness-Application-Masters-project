@@ -142,6 +142,7 @@ const SummaryScreen = () => {
                 containerBgr="#ccc" 
                 />
                 <Text > {milesLeft} miles to {progressColor} level</Text>
+                
                 </View>
                 
                 </KeyboardAvoidingView>
