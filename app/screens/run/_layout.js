@@ -8,7 +8,7 @@ export default function Layout() {
       headerShown: true 
     }}>
       <Stack.Screen 
-        name="runScreen"
+        name="index"
         options={{
           title: 'Running',
           headerStyle: {

@@ -6,7 +6,7 @@ import { Avatar } from 'react-native-elements';
 import Styles from './styles';
 import Toast from 'react-native-root-toast';
 import { router } from 'expo-router';
-import { getDayName, getTimeOfDay } from '../../../constants/dateCalculator';
+import { getDayName, getTimeOfDay } from '../../../constants/Calculations';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 const PauseScreen = () => {
     const params = useLocalSearchParams();
