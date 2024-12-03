@@ -112,13 +112,12 @@ const SummaryScreen = () => {
         ? JSON.parse(existingActivitiesJSON) 
         : [];
 
-      // Add new activity to the beginning
+ 
       const updatedActivities = [activityData, ...existingActivities];
 
-      // Keep only last 100 activities to manage storage
+    
       const trimmedActivities = updatedActivities.slice(0, 100);
 
-      // Save to storage
       await AsyncStorage.setItem('activities', JSON.stringify(trimmedActivities));
 
       // Navigate to activity screen

@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, FlatList, TextInput, Button, ActivityIndicator } from "react-native";
 import { useState } from "react";
-import FoodListItem from "../../src/components/foodListItem";
+import FoodListItem from "../../../../src/components/foodListItem";
 import { gql, useQuery, useLazyQuery } from "@apollo/client";
 
 

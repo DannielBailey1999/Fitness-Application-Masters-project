@@ -22,7 +22,7 @@ export default function Layout() {
     <Provider store={store}>
       <RootSiblingParent> 
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="( tabs )" options={{ headerShown: false }} />
         </Stack>
       </RootSiblingParent>
     </Provider>

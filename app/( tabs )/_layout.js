@@ -1,8 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import colors from '../../constants/colors';
-
-
 export default function TabLayout() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
@@ -21,7 +19,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="foodLog"
+        name="foodLogIndex"
         options={{
           title: 'Food Log',
           tabBarLabelStyle: { color: colors.tabsColor, fontWeight: 'bold' }
