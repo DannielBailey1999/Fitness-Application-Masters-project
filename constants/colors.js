@@ -4,10 +4,6 @@ export default Colors = {
 tabsColor: '#040404',
 startButton: '#fe9836',
 metricError: 'red',
-//activity card
-
-cardBackground: '#ffffff' 
-
 
 };
 

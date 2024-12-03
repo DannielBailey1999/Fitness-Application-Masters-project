@@ -1,4 +1,4 @@
-// Add this to your existing Calculations.js file
+
 
 /**
  * Calculate run progress for both time and distance
@@ -42,7 +42,6 @@ export const calculateRunProgress = (metricType, current, target) => {
     }
 };
 
-// Your existing calculations remain the same...
 export const getDayName = () => {
     var days = [
         'Sunday',
@@ -130,7 +129,7 @@ export const calculateCalories = (distance, weight = 200) => {
     return Math.round(MET * weight * hours);
 };
 
-// Original progress calculation can stay as backup
+
 export const calculateProgress = (current, target) => {
     if (target <= 0) return '0%';
     const percentage = (current / target) * 100;

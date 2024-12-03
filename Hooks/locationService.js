@@ -26,7 +26,7 @@ const useLocation = () => {
     const timerInterval = useRef(null);
     const navigation = useNavigation();
 
-    // Safe setter for totalDistance
+ 
     const updateTotalDistance = (value) => {
         if (typeof value === 'function') {
             setTotalDistance(prevDistance => ensureNumber(value(ensureNumber(prevDistance))));
@@ -45,12 +45,12 @@ const useLocation = () => {
             setCaloriesBurned(calculateCalories(safeDistance));
 
             // Debug log
-            console.log('Stats Update:', {
-                distance: safeDistance,
-                time: safeTime,
-                pace: currentPace,
-                calories: caloriesBurned
-            });
+            // console.log('Stats Update:', {
+            //     distance: safeDistance,
+            //     time: safeTime,
+            //     pace: currentPace,
+            //     calories: caloriesBurned
+            // });
         }
     }, [totalDistance, timeElapsed, isTracking]);
 
@@ -186,8 +186,8 @@ const useLocation = () => {
         errorMsg,
         isTracking,
         locationDetails,
-        totalDistance: ensureNumber(totalDistance), // Ensure number on return
-        timeElapsed: ensureNumber(timeElapsed), // Ensure number on return
+        totalDistance: ensureNumber(totalDistance),
+        timeElapsed: ensureNumber(timeElapsed),
         formattedTime: formatTime(timeElapsed),
         currentPace,
         caloriesBurned: ensureNumber(caloriesBurned),

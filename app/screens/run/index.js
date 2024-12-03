@@ -12,6 +12,7 @@ import {
     calculateRunProgress
 } from "../../../constants/Calculations";
 
+
 const RunningScreen = () => {
     const navigation = useNavigation();
     const params = useLocalSearchParams();
@@ -39,13 +40,11 @@ const RunningScreen = () => {
     const [mileValue, setmileValue] = useState('0');
     const [inFocus, setInFocus] = useState(true);
 
-    // Single useEffect to handle all stat updates
-    // Single useEffect to handle all stat updates
-// In your RunningScreen useEffect:
+ 
 
 useEffect(() => {
     try {
-        // Get target value and ensure it's a number
+        
         const target = parseFloat(targetValue || '0');
         
         if (params.metric === 'Time') {
@@ -53,7 +52,7 @@ useEffect(() => {
             setMetricValue(formattedTime?.formatted || '00:00');
             setTimeValue(formattedTime?.formatted || '00:00');
             
-            // Calculate progress for time goal
+        
             const timeProgress = calculateRunProgress('Time', timeElapsed, target);
             setProgress(timeProgress);
             
@@ -64,13 +63,13 @@ useEffect(() => {
                 display: formattedTime?.formatted
             });
         } else {
-            // Handle distance updates
+            
             const currentDistance = totalDistance || 0;
             const formattedDistance = currentDistance.toFixed(2);
             setMetricValue(formattedDistance);
             setmileValue(formattedDistance);
             
-            // Calculate progress for distance goal
+        
             const distanceProgress = calculateRunProgress('Distance', currentDistance, target);
             setProgress(distanceProgress);
             
@@ -82,7 +81,7 @@ useEffect(() => {
             });
         }
 
-        // Update pace and calories if tracking
+      
         if (isTracking) {
             setPace(currentPace || "-'--\"");
             setCalories(caloriesBurned?.toString() || '--');
@@ -102,7 +101,7 @@ useEffect(() => {
     targetValue,
     isTracking
 ]);
-    // Monitor location updates
+   
     useEffect(() => {
         if (locationDetails) {
             console.log('Location Update:', {
@@ -115,7 +114,6 @@ useEffect(() => {
         }
     }, [locationDetails]);
 
-    // Back button handler
     const backButtonCallBack = useCallback(event => {
         event.preventDefault();
         Alert.alert(
@@ -132,7 +130,7 @@ useEffect(() => {
         );
     }, [navigation]);
 
-    // Navigation focus handlers
+    
     useEffect(() => {
         if (inFocus) {
             navigation.addListener('beforeRemove', backButtonCallBack);
@@ -155,7 +153,7 @@ useEffect(() => {
         };
     }, [navigation]);
 
-    // Initial setup
+
     useEffect(() => {
         if (params.metric === 'Time') {
             setMetric('Minutes:Seconds');

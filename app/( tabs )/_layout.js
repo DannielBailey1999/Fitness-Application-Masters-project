@@ -2,6 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import colors from '../../constants/colors';
 
+
 export default function TabLayout() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
@@ -9,18 +10,23 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Start a Run',
-          tabBarLabelStyle:{color: colors.tabsColor, fontWeight: 'bold'}
+          tabBarLabelStyle: { color: colors.tabsColor, fontWeight: 'bold' }
         }}
       />
-       <Tabs.Screen
+      <Tabs.Screen
         name="activityIndex"
         options={{
           title: 'Activity',
-          tabBarLabelStyle:{color: colors.tabsColor, fontWeight: 'bold'},
+          tabBarLabelStyle: { color: colors.tabsColor, fontWeight: 'bold' }
         }}
       />
-     
+      <Tabs.Screen
+        name="foodLog"
+        options={{
+          title: 'Food Log',
+          tabBarLabelStyle: { color: colors.tabsColor, fontWeight: 'bold' }
+        }}
+      />
     </Tabs>
   );
 }
-
