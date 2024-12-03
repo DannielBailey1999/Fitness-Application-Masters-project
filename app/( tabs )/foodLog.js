@@ -1,6 +1,7 @@
-import { StyleSheet, View, Text, FlatList } from "react-native";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import { StyleSheet, View, Text, FlatList, TextInput, Button } from "react-native";
+import { useState } from "react";
 import FoodListItem from "../../src/components/foodListItem";
+
 
 const foodItems = [
     { label: 'Pizza', cal: 75, brand: 'Dominoes'},
@@ -11,9 +12,18 @@ const foodItems = [
 
 
 export default function FoodLog() {
+    const [search, setSearch] = useState('');
+    const performSearch = () => {
+        console.warn('Searching for: ', search);
+
+        setSearch(' ');
+    };
+
     return (
         <View style={styles.container}>
         {/*FoodView Item */}
+        <TextInput value={search}  onChangeText={setSearch} placeholder="Search..." style={styles.input}/>
+        {search && <Button title="Search" onPress={performSearch} />}
         <FlatList 
         data={foodItems}
         renderItem={({ item }) => <FoodListItem item={item} />}
@@ -32,6 +42,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 10,
         gap: 5,
+    },
+    input: {
+        backgroundColor: '#f2f2f2',
+        padding: 10, 
+        borderRadius: 20,
     },
 });
 
