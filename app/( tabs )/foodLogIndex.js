@@ -3,22 +3,43 @@ import { useState } from "react";
 import { Link, useRouter} from "expo-router";
 import SearchScreen from "../screens/Home/foodLog/foodLog";
 import FoodListItem from "../../src/components/foodListItem";
+import { gql, useQuery } from "@apollo/client";
+import dayjs from "dayjs";
+import FoodLogListItem from "../../src/components/foodLogListItem";
+
+const query = gql`
+query MyQuery($date: Date!, $user_id: String!) {
+  foodLogsForDate(date: $date, user_id: $user_id) {
+    created_at
+    food_id
+    kcal
+    label
+    user_id
+    id
+  }
+}`;
 
 
-const foodItems = [
-    {
-      food: {
-        label: 'Pizza',
-        nutrients: { ENERC_KCAL: 265 }, // This is calories
-        brand: 'Dominoes'
-      }
-    }
-  ];
+
 
 
 
 export default function FoodHome () {
     const router = useRouter();
+    const user_id = 'Danniel'
+    const {data, loading, error} = useQuery(query, {variables: {
+        date: dayjs().format('YYYY-MM-DD'),
+        user_id,
+    },
+    });
+    if (loading){
+        return<ActivityIndicator />;
+    }
+    if (error) {
+        return <Text>Failed to fetch data</Text>
+    }
+
+    console.log(data)
     return (
         <View style ={styles.container}>
             <View style={styles.headerRow}>
@@ -35,11 +56,10 @@ export default function FoodHome () {
             </View>
             
            
-            {/* <FlatList
-        data={foodItems}
-        renderItem={({item}) => <FoodListItem item={item}/>}
-        keyExtractor={(item, index) => index.toString()}
-    /> */}
+            <FlatList
+        data={data.foodLogsForDate}
+        renderItem={({item}) => <FoodLogListItem item={item}/>}
+            />
 </View>
     );
 };
@@ -64,4 +84,4 @@ const styles = StyleSheet.create({
         flex: 1, 
         color: 'dimgray',
     }
-})
+});
